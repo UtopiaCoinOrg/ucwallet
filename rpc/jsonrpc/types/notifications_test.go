@@ -12,7 +12,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Utopia/ucd/ucjson"
+	"github.com/UtopiaCoinOrg/ucd/ucjson"
 )
 
 // TestWalletSvrWsNtfns tests all of the chain server websocket-specific

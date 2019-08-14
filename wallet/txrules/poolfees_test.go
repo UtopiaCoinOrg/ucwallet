@@ -3,9 +3,9 @@ package txrules_test
 import (
 	"testing"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/ucutil"
-	. "github.com/Utopia/ucwallet/wallet/txrules"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	. "github.com/UtopiaCoinOrg/ucwallet/wallet/txrules"
 )
 
 func TestStakePoolTicketFee(t *testing.T) {

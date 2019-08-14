@@ -19,12 +19,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/ucjson"
-	ucdtypes "github.com/Utopia/ucd/rpc/jsonrpc/types"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/loader"
-	"github.com/Utopia/ucwallet/rpc/jsonrpc/types"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucjson"
+	ucdtypes "github.com/UtopiaCoinOrg/ucd/rpc/jsonrpc/types"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/loader"
+	"github.com/UtopiaCoinOrg/ucwallet/rpc/jsonrpc/types"
 	"github.com/gorilla/websocket"
 )
 

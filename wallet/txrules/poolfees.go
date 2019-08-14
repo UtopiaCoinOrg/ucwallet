@@ -9,9 +9,9 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/Utopia/ucd/blockchain"
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/blockchain"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
 )
 
 // ValidPoolFeeRate tests to see if a pool fee is a valid percentage from

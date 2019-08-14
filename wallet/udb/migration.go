@@ -5,9 +5,9 @@
 package udb
 
 import (
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // Old package namespace bucket keys.  These are still used as of the very first

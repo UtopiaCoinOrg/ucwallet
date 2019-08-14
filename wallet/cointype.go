@@ -5,10 +5,10 @@
 package wallet
 
 import (
-	"github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/udb"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/udb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // UpgradeToSLIP0044CoinType upgrades the wallet from the legacy BIP0044 coin

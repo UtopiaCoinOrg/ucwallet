@@ -11,8 +11,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 var (

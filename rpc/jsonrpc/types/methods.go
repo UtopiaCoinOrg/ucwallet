@@ -9,8 +9,8 @@
 package types
 
 import (
-	"github.com/Utopia/ucd/ucjson"
-	ucdtypes "github.com/Utopia/ucd/rpc/jsonrpc/types"
+	"github.com/UtopiaCoinOrg/ucd/ucjson"
+	ucdtypes "github.com/UtopiaCoinOrg/ucd/rpc/jsonrpc/types"
 )
 
 // Method describes the exact type used when registering methods with ucjson.

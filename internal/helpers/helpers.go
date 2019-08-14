@@ -8,8 +8,8 @@
 package helpers
 
 import (
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/wire"
 )
 
 // SumOutputValues sums up the list of TxOuts and returns an Amount.

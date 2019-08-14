@@ -4,7 +4,7 @@
 
 package spv
 
-import "github.com/Utopia/slog"
+import "github.com/UtopiaCoinOrg/slog"
 
 var log = slog.Disabled
 

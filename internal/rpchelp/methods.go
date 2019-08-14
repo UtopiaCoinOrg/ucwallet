@@ -8,8 +8,8 @@
 package rpchelp
 
 import (
-	ucdtypes "github.com/Utopia/ucd/rpc/jsonrpc/types"
-	"github.com/Utopia/ucwallet/rpc/jsonrpc/types"
+	ucdtypes "github.com/UtopiaCoinOrg/ucd/rpc/jsonrpc/types"
+	"github.com/UtopiaCoinOrg/ucwallet/rpc/jsonrpc/types"
 )
 
 // Common return types.

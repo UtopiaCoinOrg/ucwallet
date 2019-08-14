@@ -9,8 +9,8 @@ package cfgutil
 import (
 	"time"
 
-	"github.com/Utopia/ucd/certgen"
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucd/certgen"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 // PreferredCurve is the curve that should be used as the application default.

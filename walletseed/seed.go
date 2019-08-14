@@ -10,9 +10,9 @@ import (
 	"encoding/hex"
 	"strings"
 
-	"github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/pgpwordlist"
+	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/pgpwordlist"
 )
 
 // GenerateRandomSeed returns a new seed created from a cryptographically-secure

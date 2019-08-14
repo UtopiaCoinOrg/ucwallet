@@ -16,10 +16,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/loader"
-	"github.com/Utopia/ucwallet/rpc/jsonrpc"
-	"github.com/Utopia/ucwallet/rpc/rpcserver"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/loader"
+	"github.com/UtopiaCoinOrg/ucwallet/rpc/jsonrpc"
+	"github.com/UtopiaCoinOrg/ucwallet/rpc/rpcserver"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"

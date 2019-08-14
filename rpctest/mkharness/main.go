@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucwallet/rpctest"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucwallet/rpctest"
 )
 
 func main() {

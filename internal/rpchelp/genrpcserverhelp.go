@@ -13,9 +13,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Utopia/ucd/ucjson"
-	"github.com/Utopia/ucwallet/internal/rpchelp"
-	"github.com/Utopia/ucwallet/rpc/jsonrpc/types"
+	"github.com/UtopiaCoinOrg/ucd/ucjson"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/rpchelp"
+	"github.com/UtopiaCoinOrg/ucwallet/rpc/jsonrpc/types"
 )
 
 func init() {

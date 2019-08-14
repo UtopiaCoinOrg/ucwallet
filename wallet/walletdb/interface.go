@@ -11,7 +11,7 @@ package walletdb
 import (
 	"io"
 
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 // ReadTx represents a database transaction that can only be used for reads.  If

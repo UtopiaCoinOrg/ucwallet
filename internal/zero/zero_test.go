@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 func makeOneBytes(n int) []byte {

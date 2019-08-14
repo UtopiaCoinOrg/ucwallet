@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 func ExampleStore_Rollback(t *testing.T) {

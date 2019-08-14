@@ -5,9 +5,9 @@
 package udb
 
 import (
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // Open opens the database and returns various "manager" types that must be used

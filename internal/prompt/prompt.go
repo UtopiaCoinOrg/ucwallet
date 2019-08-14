@@ -14,8 +14,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucwallet/walletseed"
+	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucwallet/walletseed"
 	"golang.org/x/crypto/ssh/terminal"
 )
 

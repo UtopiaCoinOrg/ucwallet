@@ -10,11 +10,11 @@ package validate
 import (
 	"bytes"
 
-	"github.com/Utopia/ucd/blockchain"
-	"github.com/Utopia/ucd/gcs"
-	"github.com/Utopia/ucd/gcs/blockcf"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucd/blockchain"
+	"github.com/UtopiaCoinOrg/ucd/gcs"
+	"github.com/UtopiaCoinOrg/ucd/gcs/blockcf"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 // MerkleRoots recreates the merkle roots of regular and stake transactions from

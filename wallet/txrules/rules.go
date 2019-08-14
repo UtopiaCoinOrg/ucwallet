@@ -6,11 +6,11 @@
 package txrules
 
 import (
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/txscript"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
-	h "github.com/Utopia/ucwallet/internal/helpers"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	h "github.com/UtopiaCoinOrg/ucwallet/internal/helpers"
 )
 
 // DefaultRelayFeePerKb is the default minimum relay fee policy for a mempool.

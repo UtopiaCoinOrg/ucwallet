@@ -6,10 +6,10 @@
 package spv
 
 import (
-	"github.com/Utopia/ucd/blockchain/stake"
-	"github.com/Utopia/ucd/gcs/blockcf"
-	"github.com/Utopia/ucd/txscript"
-	"github.com/Utopia/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucd/blockchain/stake"
+	"github.com/UtopiaCoinOrg/ucd/gcs/blockcf"
+	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucd/wire"
 )
 
 // rescanCheckTransaction is a helper function to rescan both stake and regular

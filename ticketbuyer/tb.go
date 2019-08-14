@@ -8,10 +8,10 @@ import (
 	"context"
 	"sync"
 
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet"
 )
 
 const minconf = 1

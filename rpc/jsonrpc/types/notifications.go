@@ -8,7 +8,7 @@
 
 package types
 
-import "github.com/Utopia/ucd/ucjson"
+import "github.com/UtopiaCoinOrg/ucd/ucjson"
 
 const (
 	// AccountBalanceNtfnMethod is the method used for account balance

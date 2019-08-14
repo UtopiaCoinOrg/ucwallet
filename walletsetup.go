@@ -14,15 +14,15 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/internal/prompt"
-	"github.com/Utopia/ucwallet/loader"
-	"github.com/Utopia/ucwallet/wallet"
-	_ "github.com/Utopia/ucwallet/wallet/drivers/bdb"
-	"github.com/Utopia/ucwallet/walletseed"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/prompt"
+	"github.com/UtopiaCoinOrg/ucwallet/loader"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet"
+	_ "github.com/UtopiaCoinOrg/ucwallet/wallet/drivers/bdb"
+	"github.com/UtopiaCoinOrg/ucwallet/walletseed"
 )
 
 // networkDir returns the directory name of a network directory to hold wallet

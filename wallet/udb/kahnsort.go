@@ -6,7 +6,7 @@
 package udb
 
 import (
-	"github.com/Utopia/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
 )
 
 type graphNode struct {

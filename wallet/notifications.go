@@ -10,17 +10,17 @@ import (
 	"context"
 	"sync"
 
-	"github.com/Utopia/ucd/blockchain"
-	"github.com/Utopia/ucd/blockchain/stake"
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucd/rpcclient"
-	"github.com/Utopia/ucd/txscript"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/udb"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/blockchain"
+	"github.com/UtopiaCoinOrg/ucd/blockchain/stake"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucd/rpcclient"
+	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/udb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // TODO: It would be good to send errors during notification creation to the rpc

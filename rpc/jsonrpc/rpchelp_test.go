@@ -17,14 +17,14 @@ package jsonrpc
 
 import (
 	"fmt"
-	"github.com/Utopia/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
 	"strings"
 	"testing"
 
-	"github.com/Utopia/ucd/ucjson"
-	"github.com/Utopia/ucwallet/internal/rpchelp"
-	_ "github.com/Utopia/ucwallet/rpc/jsonrpc/types"
-	"github.com/Utopia/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucjson"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/rpchelp"
+	_ "github.com/UtopiaCoinOrg/ucwallet/rpc/jsonrpc/types"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
 )
 
 func serverMethods() map[string]struct{} {

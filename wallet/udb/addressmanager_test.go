@@ -15,11 +15,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/ucec"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucec"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // testContext is used to store context information about a running test which

@@ -72,7 +72,7 @@ Wallet clients interact with the wallet using one of two RPC servers:
 
 Binary releases are provided for common operating systems and architectures:
 
-https://github.com/Utopia/Utopia-binaries/releases
+https://github.com/UtopiaCoinOrg/Utopia-binaries/releases
 
 ### Build from source (all platforms)
 
@@ -148,15 +148,15 @@ PS> $editor $env:LOCALAPPDATA\Ucwallet\ucwallet.conf
 
 Linux/BSD/POSIX (Installed from source):
 ```bash
-$ cp $GOPATH/src/github.com/Utopia/ucd/sample-ucd.conf ~/.ucd/ucd.conf
-$ cp $GOPATH/src/github.com/Utopia/ucwallet/sample-ucwallet.conf ~/.ucwallet/ucwallet.conf
+$ cp $GOPATH/src/github.com/UtopiaCoinOrg/ucd/sample-ucd.conf ~/.ucd/ucd.conf
+$ cp $GOPATH/src/github.com/UtopiaCoinOrg/ucwallet/sample-ucwallet.conf ~/.ucwallet/ucwallet.conf
 $ $EDITOR ~/.ucd/ucd.conf
 $ $EDITOR ~/.ucwallet/ucwallet.conf
 ```
 
 ## Issue Tracker
 
-The [integrated github issue tracker](https://github.com/Utopia/ucwallet/issues)
+The [integrated github issue tracker](https://github.com/UtopiaCoinOrg/ucwallet/issues)
 is used for this project.
 
 ## License

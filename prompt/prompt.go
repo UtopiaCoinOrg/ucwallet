@@ -3,8 +3,8 @@ package prompt
 import (
 	"bufio"
 
-	"github.com/Utopia/ucwallet/internal/prompt"
-	"github.com/Utopia/ucwallet/wallet"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/prompt"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet"
 )
 
 // Setup prompts for, from a buffered reader, the private and/or public

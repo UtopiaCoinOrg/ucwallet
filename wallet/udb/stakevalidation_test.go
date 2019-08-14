@@ -9,11 +9,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/gcs"
-	"github.com/Utopia/ucd/wire"
-	_ "github.com/Utopia/ucwallet/wallet/internal/bdb"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/gcs"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	_ "github.com/UtopiaCoinOrg/ucwallet/wallet/internal/bdb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 func insertMainChainHeaders(s *Store, ns walletdb.ReadWriteBucket, addrmgrNs walletdb.ReadBucket,

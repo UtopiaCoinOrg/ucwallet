@@ -52,12 +52,12 @@ import (
 	"fmt"
 	"path/filepath"
 
-	pb "github.com/Utopia/ucwallet/rpc/walletrpc"
+	pb "github.com/UtopiaCoinOrg/ucwallet/rpc/walletrpc"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	"github.com/Utopia/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
 )
 
 var certificateFile = filepath.Join(ucutil.AppDataDir("ucwallet", false), "rpc.cert")

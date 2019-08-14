@@ -14,9 +14,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Utopia/ucwallet/errors"
-	_ "github.com/Utopia/ucwallet/wallet/internal/bdb"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	_ "github.com/UtopiaCoinOrg/ucwallet/wallet/internal/bdb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // This example demonstrates creating a new database.

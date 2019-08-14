@@ -5,8 +5,8 @@
 package wallet
 
 import (
-	hdkeychain "github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucd/ucutil"
+	hdkeychain "github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
 )
 
 // hd2to1 converts a hdkeychain2 extended key to the v1 API.

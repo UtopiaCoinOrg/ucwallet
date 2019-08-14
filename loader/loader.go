@@ -9,11 +9,11 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet"
-	_ "github.com/Utopia/ucwallet/wallet/drivers/bdb" // driver loaded during init
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet"
+	_ "github.com/UtopiaCoinOrg/ucwallet/wallet/drivers/bdb" // driver loaded during init
 )
 
 const (

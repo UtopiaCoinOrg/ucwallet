@@ -3,8 +3,8 @@ package txsizes_test
 import (
 	"testing"
 
-	"github.com/Utopia/ucd/wire"
-	. "github.com/Utopia/ucwallet/wallet/internal/txsizes"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	. "github.com/UtopiaCoinOrg/ucwallet/wallet/internal/txsizes"
 )
 
 const (

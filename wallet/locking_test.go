@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 var testPrivPass = []byte("private")

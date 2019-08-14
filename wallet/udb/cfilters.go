@@ -5,10 +5,10 @@
 package udb
 
 import (
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/gcs"
-	"github.com/Utopia/ucd/gcs/blockcf"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/gcs"
+	"github.com/UtopiaCoinOrg/ucd/gcs/blockcf"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // CFilter returns the saved regular compact filter for a block.

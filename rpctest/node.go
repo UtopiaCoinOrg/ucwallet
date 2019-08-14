@@ -16,9 +16,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Utopia/ucd/certgen"
-	rpc "github.com/Utopia/ucd/rpcclient"
-	"github.com/Utopia/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucd/certgen"
+	rpc "github.com/UtopiaCoinOrg/ucd/rpcclient"
+	"github.com/UtopiaCoinOrg/ucd/wire"
 )
 
 // nodeConfig contains all the args, and data required to launch a ucd process

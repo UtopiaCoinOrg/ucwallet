@@ -9,11 +9,11 @@
 // Full documentation of the API implemented by this package is maintained in a
 // language-agnostic document:
 //
-//   https://github.com/Utopia/ucwallet/blob/master/rpc/documentation/api.md
+//   https://github.com/UtopiaCoinOrg/ucwallet/blob/master/rpc/documentation/api.md
 //
 // Any API changes must be performed according to the steps listed here:
 //
-//   https://github.com/Utopia/ucwallet/blob/master/rpc/documentation/serverchanges.md
+//   https://github.com/UtopiaCoinOrg/ucwallet/blob/master/rpc/documentation/serverchanges.md
 package rpcserver
 
 import (
@@ -31,32 +31,32 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/Utopia/ucd/addrmgr"
-	"github.com/Utopia/ucd/blockchain/stake"
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/ucec"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucd/rpcclient"
-	"github.com/Utopia/ucd/txscript"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/chain"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/internal/cfgutil"
-	h "github.com/Utopia/ucwallet/internal/helpers"
-	"github.com/Utopia/ucwallet/internal/zero"
-	"github.com/Utopia/ucwallet/loader"
-	"github.com/Utopia/ucwallet/netparams"
-	"github.com/Utopia/ucwallet/p2p"
-	pb "github.com/Utopia/ucwallet/rpc/walletrpc"
-	"github.com/Utopia/ucwallet/spv"
-	"github.com/Utopia/ucwallet/ticketbuyer"
-	"github.com/Utopia/ucwallet/wallet"
-	"github.com/Utopia/ucwallet/wallet/txauthor"
-	"github.com/Utopia/ucwallet/wallet/txrules"
-	"github.com/Utopia/ucwallet/wallet/udb"
-	"github.com/Utopia/ucwallet/walletseed"
+	"github.com/UtopiaCoinOrg/ucd/addrmgr"
+	"github.com/UtopiaCoinOrg/ucd/blockchain/stake"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/ucec"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucd/rpcclient"
+	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/chain"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/cfgutil"
+	h "github.com/UtopiaCoinOrg/ucwallet/internal/helpers"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/zero"
+	"github.com/UtopiaCoinOrg/ucwallet/loader"
+	"github.com/UtopiaCoinOrg/ucwallet/netparams"
+	"github.com/UtopiaCoinOrg/ucwallet/p2p"
+	pb "github.com/UtopiaCoinOrg/ucwallet/rpc/walletrpc"
+	"github.com/UtopiaCoinOrg/ucwallet/spv"
+	"github.com/UtopiaCoinOrg/ucwallet/ticketbuyer"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/txauthor"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/txrules"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/udb"
+	"github.com/UtopiaCoinOrg/ucwallet/walletseed"
 )
 
 // Public API version constants

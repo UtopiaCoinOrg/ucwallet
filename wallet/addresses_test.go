@@ -12,9 +12,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // expectedAddr is used to house the expected return values from a managed

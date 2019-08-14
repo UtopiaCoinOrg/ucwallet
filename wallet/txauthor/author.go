@@ -7,15 +7,15 @@
 package txauthor
 
 import (
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/ucec"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/txscript"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
-	h "github.com/Utopia/ucwallet/internal/helpers"
-	"github.com/Utopia/ucwallet/wallet/internal/txsizes"
-	"github.com/Utopia/ucwallet/wallet/txrules"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucec"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	h "github.com/UtopiaCoinOrg/ucwallet/internal/helpers"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/internal/txsizes"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/txrules"
 )
 
 const (

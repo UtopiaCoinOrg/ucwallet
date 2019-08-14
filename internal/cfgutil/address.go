@@ -5,7 +5,7 @@
 
 package cfgutil
 
-import "github.com/Utopia/ucd/ucutil"
+import "github.com/UtopiaCoinOrg/ucd/ucutil"
 
 // AddressFlag contains a ucutil.Address and implements the flags.Marshaler and
 // Unmarshaler interfaces so it can be used as a config struct field.

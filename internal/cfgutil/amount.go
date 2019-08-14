@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Utopia/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
 )
 
 // AmountFlag embeds a ucutil.Amount and implements the flags.Marshaler and

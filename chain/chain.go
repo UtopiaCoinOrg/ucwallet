@@ -11,11 +11,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/rpcclient"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/rpcclient"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 var requiredChainServerAPI = semver{major: 6, minor: 0, patch: 0}

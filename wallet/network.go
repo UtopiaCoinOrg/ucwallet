@@ -7,11 +7,11 @@ package wallet
 import (
 	"context"
 
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/gcs"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/gcs"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 // Peer provides wallets with a subset of Utopia network functionality available

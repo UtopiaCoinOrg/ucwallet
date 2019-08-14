@@ -8,10 +8,10 @@ package udb
 import (
 	"encoding/hex"
 
-	"github.com/Utopia/ucd/chaincfg/chainec"
-	"github.com/Utopia/ucd/ucec"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainec"
+	"github.com/UtopiaCoinOrg/ucd/ucec"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
 )
 
 // ManagedAddress is an interface that provides acces to information regarding

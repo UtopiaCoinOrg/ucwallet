@@ -14,12 +14,12 @@ import (
 	"io"
 	"os"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucutil/hdkeychain"
-	_ "github.com/Utopia/ucwallet/wallet/internal/bdb"
-	"github.com/Utopia/ucwallet/wallet/udb"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
-	"github.com/Utopia/ucwallet/walletseed"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucutil/hdkeychain"
+	_ "github.com/UtopiaCoinOrg/ucwallet/wallet/internal/bdb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/udb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucwallet/walletseed"
 )
 
 const dbname = "v4.db"

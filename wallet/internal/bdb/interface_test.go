@@ -21,8 +21,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // errSubTestFail is used to signal that a sub test returned false.

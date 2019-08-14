@@ -12,8 +12,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Utopia/ucd/ucjson"
-	ucdtypes "github.com/Utopia/ucd/rpc/jsonrpc/types"
+	"github.com/UtopiaCoinOrg/ucd/ucjson"
+	ucdtypes "github.com/UtopiaCoinOrg/ucd/rpc/jsonrpc/types"
 )
 
 // TestWalletSvrCmds tests all of the wallet server commands marshal and

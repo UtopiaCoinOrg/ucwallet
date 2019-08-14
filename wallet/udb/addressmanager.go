@@ -11,14 +11,14 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/chaincfg/chainec"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/internal/zero"
-	"github.com/Utopia/ucwallet/wallet/internal/snacl"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainec"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/zero"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/internal/snacl"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 	"golang.org/x/crypto/ripemd160"
 )
 

@@ -8,16 +8,16 @@ import (
 	"context"
 	"encoding/binary"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/ucec/secp256k1"
-	"github.com/Utopia/ucd/ucutil"
-	hdkeychain "github.com/Utopia/ucd/hdkeychain"
-	hdkeychain2 "github.com/Utopia/ucd/hdkeychain"
-	"github.com/Utopia/ucd/txscript"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/internal/txsizes"
-	"github.com/Utopia/ucwallet/wallet/udb"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/ucec/secp256k1"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	hdkeychain "github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	hdkeychain2 "github.com/UtopiaCoinOrg/ucd/hdkeychain"
+	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/internal/txsizes"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/udb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 // V0Scripter is a type (usually addresses) which create or encode to version 0

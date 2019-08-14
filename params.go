@@ -5,6 +5,6 @@
 
 package main
 
-import "github.com/Utopia/ucwallet/netparams"
+import "github.com/UtopiaCoinOrg/ucwallet/netparams"
 
 var activeNet = &netparams.MainNetParams

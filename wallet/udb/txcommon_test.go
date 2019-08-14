@@ -11,13 +11,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/gcs"
-	"github.com/Utopia/ucd/gcs/blockcf"
-	"github.com/Utopia/ucd/wire"
-	_ "github.com/Utopia/ucwallet/wallet/drivers/bdb"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/gcs"
+	"github.com/UtopiaCoinOrg/ucd/gcs/blockcf"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	_ "github.com/UtopiaCoinOrg/ucwallet/wallet/drivers/bdb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 func tempDB(t *testing.T) (db walletdb.DB, teardown func()) {

@@ -13,8 +13,8 @@ interface. The functions are only exported while the tests are being run.
 package udb
 
 import (
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/internal/snacl"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/internal/snacl"
 )
 
 // TstLatestMgrVersion makes the unexported latestMgrVersion variable available

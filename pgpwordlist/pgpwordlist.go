@@ -19,7 +19,7 @@ package pgpwordlist
 import (
 	"strings"
 
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 // ByteToMnemonic returns the PGP word list encoding of b when found at index.

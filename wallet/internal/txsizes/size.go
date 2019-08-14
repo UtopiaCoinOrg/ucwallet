@@ -6,8 +6,8 @@
 package txsizes
 
 import (
-	"github.com/Utopia/ucd/wire"
-	h "github.com/Utopia/ucwallet/internal/helpers"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	h "github.com/UtopiaCoinOrg/ucwallet/internal/helpers"
 )
 
 // Worst case script and input/output size estimates.

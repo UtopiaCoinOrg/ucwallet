@@ -8,14 +8,14 @@ package txauthor_test
 import (
 	"testing"
 
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/wallet/txauthor"
-	. "github.com/Utopia/ucwallet/wallet/txauthor"
-	"github.com/Utopia/ucwallet/wallet/txrules"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/txauthor"
+	. "github.com/UtopiaCoinOrg/ucwallet/wallet/txauthor"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/txrules"
 
-	"github.com/Utopia/ucwallet/wallet/internal/txsizes"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/internal/txsizes"
 )
 
 type AuthorTestChangeSource struct{}

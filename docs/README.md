@@ -1,3 +1,3 @@
 ### Guides
 
-[Spending funds offline using cold wallets](https://github.com/Utopia/ucwallet/tree/master/docs/offline_wallets.md)
+[Spending funds offline using cold wallets](https://github.com/UtopiaCoinOrg/ucwallet/tree/master/docs/offline_wallets.md)

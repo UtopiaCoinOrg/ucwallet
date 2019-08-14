@@ -13,9 +13,9 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/Utopia/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucd/wire"
 
-	rpc "github.com/Utopia/ucd/rpcclient"
+	rpc "github.com/UtopiaCoinOrg/ucd/rpcclient"
 )
 
 // walletTestConfig contains all the args, and data required to launch a ucwallet process

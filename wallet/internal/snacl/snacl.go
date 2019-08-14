@@ -12,8 +12,8 @@ import (
 	"io"
 	"runtime/debug"
 
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/internal/zero"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/zero"
 	"golang.org/x/crypto/nacl/secretbox"
 	"golang.org/x/crypto/scrypt"
 )

@@ -19,7 +19,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Utopia/slog"
+	"github.com/UtopiaCoinOrg/slog"
 	"google.golang.org/grpc/grpclog"
 )
 

@@ -8,7 +8,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 var (

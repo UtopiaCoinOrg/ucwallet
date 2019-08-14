@@ -8,8 +8,8 @@ package jsonrpc
 import (
 	"fmt"
 
-	"github.com/Utopia/ucd/ucjson"
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucd/ucjson"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 )
 
 func convertError(err error) *ucjson.RPCError {

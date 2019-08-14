@@ -16,14 +16,14 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/internal/cfgutil"
-	"github.com/Utopia/ucwallet/netparams"
-	"github.com/Utopia/ucwallet/version"
-	"github.com/Utopia/ucwallet/wallet"
-	"github.com/Utopia/ucwallet/wallet/txrules"
-	"github.com/Utopia/slog"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/internal/cfgutil"
+	"github.com/UtopiaCoinOrg/ucwallet/netparams"
+	"github.com/UtopiaCoinOrg/ucwallet/version"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/txrules"
+	"github.com/UtopiaCoinOrg/slog"
 	flags "github.com/jessevdk/go-flags"
 )
 

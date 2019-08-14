@@ -16,12 +16,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
 
-	"github.com/Utopia/ucd/ucutil"
-	rpc "github.com/Utopia/ucd/rpcclient"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	rpc "github.com/UtopiaCoinOrg/ucd/rpcclient"
 )
 
 var (

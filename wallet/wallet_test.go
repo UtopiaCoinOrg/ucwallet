@@ -8,7 +8,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/Utopia/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
 )
 
 func TestCoinbaseMatured(t *testing.T) {

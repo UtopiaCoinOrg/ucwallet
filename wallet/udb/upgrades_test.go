@@ -15,12 +15,12 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/Utopia/ucd/chaincfg"
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/wire"
-	_ "github.com/Utopia/ucwallet/wallet/drivers/bdb"
-	"github.com/Utopia/ucwallet/wallet/walletdb"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	_ "github.com/UtopiaCoinOrg/ucwallet/wallet/drivers/bdb"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet/walletdb"
 )
 
 var dbUpgradeTests = [...]struct {

@@ -9,16 +9,16 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/Utopia/ucd/chaincfg/chainhash"
-	"github.com/Utopia/ucd/ucutil"
-	"github.com/Utopia/ucd/gcs"
-	"github.com/Utopia/ucd/gcs/blockcf"
-	"github.com/Utopia/ucd/txscript"
-	"github.com/Utopia/ucd/wire"
-	"github.com/Utopia/ucwallet/errors"
-	"github.com/Utopia/ucwallet/p2p"
-	"github.com/Utopia/ucwallet/validate"
-	"github.com/Utopia/ucwallet/wallet"
+	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
+	"github.com/UtopiaCoinOrg/ucd/gcs"
+	"github.com/UtopiaCoinOrg/ucd/gcs/blockcf"
+	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucd/wire"
+	"github.com/UtopiaCoinOrg/ucwallet/errors"
+	"github.com/UtopiaCoinOrg/ucwallet/p2p"
+	"github.com/UtopiaCoinOrg/ucwallet/validate"
+	"github.com/UtopiaCoinOrg/ucwallet/wallet"
 )
 
 var _ wallet.NetworkBackend = (*Syncer)(nil)

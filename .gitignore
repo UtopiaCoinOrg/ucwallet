@@ -1,0 +1,6 @@
+ucwallet
+vendor
+*~
+.vscode
+.idea
+rpc/tools/bin/

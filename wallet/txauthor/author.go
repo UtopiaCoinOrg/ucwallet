@@ -60,6 +60,8 @@ type AuthoredTx struct {
 type ChangeSource interface {
 	Script() (script []byte, version uint16, err error)
 	ScriptSize() int
+	SetChangeAddr(change ucutil.Address)
+	GetChangeAddr() ucutil.Address
 }
 
 // NewUnsignedTransaction creates an unsigned transaction paying to one or more
@@ -95,6 +97,22 @@ func NewUnsignedTransaction(outputs []*wire.TxOut, relayFeePerKb ucutil.Amount,
 	maxSignedSize := txsizes.EstimateSerializeSize(scriptSizes, outputs, changeScriptSize)
 	targetFee := txrules.FeeForSerializeSize(relayFeePerKb, maxSignedSize)
 
+
+	isFlashTx :=false
+	totalValue := int64(0)
+	flashFee :=int64(0)
+
+	for _,out:=range outputs{
+		totalValue+=out.Value
+		if _,has:=txscript.HaveFlashTxTag(out.PkScript);has{
+			isFlashTx=true
+		}
+	}
+	if isFlashTx {
+		flashFee = totalValue/1000
+		targetFee +=  ucutil.Amount(flashFee)
+	}
+
 	for {
 		inputDetail, err := fetchInputs(targetAmount + targetFee)
 		if err != nil {
@@ -103,6 +121,28 @@ func NewUnsignedTransaction(outputs []*wire.TxOut, relayFeePerKb ucutil.Amount,
 
 		if inputDetail.Amount < targetAmount+targetFee {
 			return nil, errors.E(op, errors.InsufficientBalance)
+		}
+
+		if isFlashTx {
+			_, addrs, _, err := txscript.ExtractPkScriptAddrs(
+				txscript.DefaultScriptVersion, inputDetail.Scripts[0],
+				ucutil.ActiveNet)
+			if err != nil || len(addrs) == 0 {
+				// Cannot determine which account this belongs
+				// to without a valid address.  TODO: Fix this
+				// by saving outputs per account, or accounts
+				// per output.
+				continue
+			}
+			fetchChange.SetChangeAddr(addrs[0])
+			changeScript, changeScriptVersion, err = fetchChange.Script()
+			if err != nil {
+				return nil, errors.E(op, err)
+			}
+			changeScriptSize = fetchChange.ScriptSize()
+			maxSignedSize = txsizes.EstimateSerializeSize(scriptSizes, outputs, changeScriptSize)
+			//targetFee = txrules.FeeForSerializeSize(relayFeePerKb, maxSignedSize)
+			//targetFee +=  ucutil.Amount(flashFee)
 		}
 
 		scriptSizes := make([]int, 0, len(inputDetail.RedeemScriptSizes))
@@ -125,7 +165,7 @@ func NewUnsignedTransaction(outputs []*wire.TxOut, relayFeePerKb ucutil.Amount,
 			Expiry:   0,
 		}
 		changeIndex := -1
-		changeAmount := inputDetail.Amount - targetAmount - maxRequiredFee
+		changeAmount := inputDetail.Amount - targetAmount - maxRequiredFee - ucutil.Amount(flashFee)
 		if changeAmount != 0 && !txrules.IsDustAmount(changeAmount,
 			changeScriptSize, relayFeePerKb) {
 			if len(changeScript) > txscript.MaxScriptElementSize {

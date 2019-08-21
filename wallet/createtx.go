@@ -297,11 +297,11 @@ func (w *Wallet) insertMultisigOutIntoTxMgr(ns walletdb.ReadWriteBucket, msgTx *
 
 // checkHighFees performs a high fee check if enabled and possible, returning an
 // error if the transaction pays high fees.
-func (w *Wallet) checkHighFees(totalInput ucutil.Amount, tx *wire.MsgTx) error {
+func (w *Wallet) checkHighFees(totalInput ucutil.Amount, tx *wire.MsgTx, changeIndex int) error {
 	if w.AllowHighFees {
 		return nil
 	}
-	if txrules.PaysHighFees(totalInput, tx) {
+	if txrules.PaysHighFees(totalInput, tx, changeIndex) {
 		return errors.E(errors.Policy, "high fee")
 	}
 	return nil
@@ -382,10 +382,17 @@ func (w *Wallet) txToOutputsInternal(op errors.Op, outputs []*wire.TxOut, accoun
 		}
 		once.Do(w.lockedOutpointMu.Unlock)
 
+		isFlashTx :=false
+		for _,out:=range outputs{
+			if _,has:=txscript.HaveFlashTxTag(out.PkScript);has{
+				isFlashTx=true
+			}
+		}
+
 		// Randomize change position, if change exists, before signing.  This
 		// doesn't affect the serialize size, so the change amount will still be
 		// valid.
-		if atx.ChangeIndex >= 0 && randomizeChangeIdx {
+		if atx.ChangeIndex >= 0 && randomizeChangeIdx && !isFlashTx{
 			atx.RandomizeChangePosition()
 		}
 
@@ -415,7 +422,7 @@ func (w *Wallet) txToOutputsInternal(op errors.Op, outputs []*wire.TxOut, accoun
 			" %v from imported account into default account.", changeAmount)
 	}
 
-	err = w.checkHighFees(atx.TotalInput, atx.Tx)
+	err = w.checkHighFees(atx.TotalInput, atx.Tx, atx.ChangeIndex)
 	if err != nil {
 		return nil, errors.E(op, err)
 	}
@@ -610,7 +617,7 @@ func (w *Wallet) txToMultisigInternal(op errors.Op, dbtx walletdb.ReadWriteTx, a
 		return txToMultisigError(errors.E(op, err))
 	}
 
-	err = w.checkHighFees(totalInput, msgtx)
+	err = w.checkHighFees(totalInput, msgtx, -1)
 	if err != nil {
 		return txToMultisigError(errors.E(op, err))
 	}
@@ -771,7 +778,7 @@ func (w *Wallet) compressWalletInternal(op errors.Op, dbtx walletdb.ReadWriteTx,
 		return nil, errors.E(op, err)
 	}
 
-	err = w.checkHighFees(totalAdded, msgtx)
+	err = w.checkHighFees(totalAdded, msgtx, -1)
 	if err != nil {
 		return nil, errors.E(op, err)
 	}
@@ -1300,7 +1307,7 @@ func (w *Wallet) purchaseTickets(ctx context.Context, op errors.Op, n NetworkBac
 			return ticketHashes, errors.E(op, err)
 		}
 
-		err = w.checkHighFees(ucutil.Amount(eop.amt), ticket)
+		err = w.checkHighFees(ucutil.Amount(eop.amt), ticket, -1)
 		if err != nil {
 			return ticketHashes, errors.E(op, err)
 		}

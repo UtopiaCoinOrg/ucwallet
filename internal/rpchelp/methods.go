@@ -81,6 +81,7 @@ var Methods = []struct {
 	{"sendfrom", returnsString},
 	{"sendmany", returnsString},
 	{"sendtoaddress", returnsString},
+	{"flashsendtoaddress", returnsString},
 	{"sendtomultisig", returnsString},
 	{"setticketfee", returnsBool},
 	{"settxfee", returnsBool},

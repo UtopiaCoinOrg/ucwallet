@@ -75,6 +75,7 @@ func NewRPCClientConfig(chainParams *chaincfg.Params, connConfig *rpcclient.Conn
 		OnBlockConnected:        client.onBlockConnected,
 		OnBlockDisconnected:     client.onBlockDisconnected,
 		OnRelevantTxAccepted:    client.onRelevantTxAccepted,
+		OnNewFlashTx:            client.onNewFlashTx,
 		OnReorganization:        client.onReorganization,
 		OnWinningTickets:        client.onWinningTickets,
 		OnSpentAndMissedTickets: client.onSpentAndMissedTickets,
@@ -191,6 +192,12 @@ type (
 		transaction *wire.MsgTx
 	}
 
+	NewFlashTx struct {
+		Tickets []*chainhash.Hash
+		FlashTx []byte
+		Resend  bool
+	}
+
 	// reorganization is a notification that a reorg has happen with the new
 	// old and new tip included.
 	reorganization struct {
@@ -268,6 +275,17 @@ func (c *RPCClient) onRelevantTxAccepted(transaction []byte) {
 	select {
 	case c.enqueueNotification <- relevantTxAccepted{
 		transaction: msgTx,
+	}:
+	case <-c.quit:
+	}
+}
+
+func (c *RPCClient) onNewFlashTx(flashTxHash []byte, tickets []*chainhash.Hash, resend bool) {
+	select {
+	case c.enqueueNotification <- NewFlashTx{
+		FlashTx: flashTxHash,
+		Tickets: tickets,
+		Resend:  resend,
 	}:
 	case <-c.quit:
 	}

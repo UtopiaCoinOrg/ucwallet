@@ -12,6 +12,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"math/big"
 	"strings"
 	"sync"
@@ -46,6 +47,9 @@ const (
 	jsonrpcSemverMajor  = 6
 	jsonrpcSemverMinor  = 1
 	jsonrpcSemverPatch  = 0
+
+	communityTxTag             = "uccommunitySend"
+	defaultConfirmNumber  = 6
 )
 
 // confirms returns the number of confirmations for a transaction in a block at
@@ -109,6 +113,7 @@ var handlers = map[string]handler{
 	"sendfrom":                {fn: (*Server).sendFrom},
 	"sendmany":                {fn: (*Server).sendMany},
 	"sendtoaddress":           {fn: (*Server).sendToAddress},
+	"flashsendtoaddress":       {fn: (*Server).flashSendToAddress},
 	"sendtomultisig":          {fn: (*Server).sendToMultiSig},
 	"setticketfee":            {fn: (*Server).setTicketFee},
 	"settxfee":                {fn: (*Server).setTxFee},
@@ -2256,6 +2261,36 @@ func sendPairs(w *wallet.Wallet, amounts map[string]ucutil.Amount, account uint3
 	return txSha.String(), nil
 }
 
+// sendPairs creates and sends payment transactions.
+// It returns the transaction hash in string format upon success
+// All errors are returned in ucjson.RPCError format
+func FlashSendPairs(w *wallet.Wallet, amounts map[string]ucutil.Amount, account uint32, minconf int32, payLoad []byte) (string, error) {
+	outputs, err := makeOutputs(amounts, w.ChainParams())
+	if err != nil {
+		return "", err
+	}
+	if len(payLoad) > 0 {
+		payloadOutput, err := w.MakeNulldataOutput(payLoad)
+		if err != nil {
+			return "", err
+		}
+		outputs = append(outputs, payloadOutput)
+	}
+
+	txSha, err := w.SendOutputs(outputs, account, minconf)
+	if err != nil {
+		if errors.Is(errors.Locked, err) {
+			return "", errWalletUnlockNeeded
+		}
+		if errors.Is(errors.InsufficientBalance, err) {
+			return "", rpcError(ucjson.ErrRPCWalletInsufficientFunds, err)
+		}
+		return "", err
+	}
+
+	return txSha.String(), nil
+}
+
 // redeemMultiSigOut receives a transaction hash/idx and fetches the first output
 // index or indices with known script hashes from the transaction. It then
 // construct a transaction with a single P2PKH paying to a specified address.
@@ -2673,6 +2708,66 @@ func (s *Server) sendToAddress(ctx context.Context, icmd interface{}) (interface
 
 	// sendtoaddress always spends from the default account, this matches bitcoind
 	return sendPairs(w, pairs, udb.DefaultAccountNum, 1)
+}
+
+// flashSendToAddress handles a flashSendToAddress RPC request by creating a new
+// transaction spending unspent transaction outputs for a wallet to another
+// payment address.  Leftover inputs not sent to the payment address or a fee
+// for the miner are sent back to a new address in the wallet.  Upon success,
+// the TxID for the created transaction is returned.
+func (s *Server) flashSendToAddress(ctx context.Context, icmd interface{}) (interface{}, error) {
+	cmd := icmd.(*types.FlashSendToAddressCmd)
+	w, ok := s.walletLoader.LoadedWallet()
+	if !ok {
+		return nil, errUnloadedWallet
+	}
+
+	// Transaction comments are not yet supported.  Error instead of
+	// pretending to save them.
+	if !isNilOrEmpty(cmd.Comment) || !isNilOrEmpty(cmd.CommentTo) {
+		return nil, rpcErrorf(ucjson.ErrRPCUnimplemented, "transaction comments are unsupported")
+	}
+
+	amt, err := ucutil.NewAmount(cmd.Amount)
+	if err != nil {
+		return nil, err
+	}
+
+	// Check that signed integer parameters are positive.
+	if amt < 0 {
+		return nil, rpcErrorf(ucjson.ErrRPCInvalidParameter, "negative amount")
+	}
+
+	bestHash, height := w.MainChainTip()
+	var chainClient *rpcclient.Client
+	if n, ok := s.walletLoader.NetworkBackend(); ok {
+		client, err := chain.RPCClientFromBackend(n)
+		if err == nil {
+			chainClient = client
+		}else{
+			return nil, fmt.Errorf("chain client is not connected")
+		}
+	}
+
+	lotteryHash, err :=chainClient.GetBlockHash(int64(height) - defaultConfirmNumber)
+	if err != nil {
+		lotteryHash = &bestHash
+	}
+	if lotteryHash == nil {
+		return nil, fmt.Errorf("fast tx get lotterHash  failed")
+	}
+	lotteryHashBytes := lotteryHash.CloneBytes()
+
+	payloadBytes := make([]byte, 0, 16+32)
+	payloadBytes = append(payloadBytes, []byte(communityTxTag)...)
+	payloadBytes = append(payloadBytes, lotteryHashBytes...)
+	// Mock up map of address and amount pairs.
+	pairs := map[string]ucutil.Amount{
+		cmd.Address: amt,
+	}
+
+	// flashSendToAddress always spends from the default account, this matches bitcoind
+	return FlashSendPairs(w, pairs, udb.DefaultAccountNum, 6, payloadBytes)
 }
 
 // sendToMultiSig handles a sendtomultisig RPC request by creating a new
@@ -3150,6 +3245,15 @@ func (src *scriptChangeSource) Script() ([]byte, uint16, error) {
 
 func (src *scriptChangeSource) ScriptSize() int {
 	return len(src.script)
+}
+
+func (src *scriptChangeSource) SetChangeAddr(change ucutil.Address) {
+	log.Info("scriptChangeSource.SetChangeAddr not implemented.")
+}
+
+func (src *scriptChangeSource) GetChangeAddr() ucutil.Address {
+	log.Info("scriptChangeSource.GetChangeAddr not implemented.")
+	return nil
 }
 
 func makeScriptChangeSource(address string, version uint16) (*scriptChangeSource, error) {

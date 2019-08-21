@@ -11,9 +11,9 @@ import (
 	"strings"
 
 	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
-	"github.com/UtopiaCoinOrg/ucd/ucutil"
 	"github.com/UtopiaCoinOrg/ucd/gcs"
 	"github.com/UtopiaCoinOrg/ucd/rpcclient"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
 	"github.com/UtopiaCoinOrg/ucd/wire"
 	"github.com/UtopiaCoinOrg/ucwallet/errors"
 	"github.com/UtopiaCoinOrg/ucwallet/wallet"
@@ -141,6 +141,15 @@ func (b *rpcBackend) LoadTxFilter(ctx context.Context, reload bool, addrs []ucut
 	}
 	return nil
 }
+func (b *rpcBackend)SendFlashTxVote(flashTxVote *wire.MsgFlashTxVote)error{
+	const op errors.Op = "ucd.jsonrpc.sendflashtxvote"
+	err:=b.rpcClient.SendFlashTxVote(flashTxVote)
+	if err != nil {
+		return errors.E(op, err)
+	}
+	return nil
+}
+
 
 func (b *rpcBackend) PublishTransactions(ctx context.Context, txs ...*wire.MsgTx) error {
 	const op errors.Op = "ucd.jsonrpc.sendrawtransaction"
@@ -154,6 +163,7 @@ func (b *rpcBackend) PublishTransactions(ctx context.Context, txs ...*wire.MsgTx
 		// the wallet perform their own high fee check if high fees are disabled.
 		// This matches the lack of any high fee checking when publishing
 		// transactions over the wire protocol.
+
 		_, err := b.rpcClient.SendRawTransaction(tx, true)
 		if err != nil && firstErr == nil {
 			firstErr = err

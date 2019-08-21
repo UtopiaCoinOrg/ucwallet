@@ -416,6 +416,16 @@ var helpDescsEnUS = map[string]string{
 	"sendtoaddress-commentto": "Unused",
 	"sendtoaddress--result0":  "The transaction hash of the sent transaction",
 
+	// FlashSendToAddressCmd help.
+	"flashsendtoaddress--synopsis": "Authors, signs, and sends a transaction that outputs some amount to a payment address.\n" +
+		"Unlike sendfrom, outputs are always chosen from the default account.\n" +
+		"A change output is automatically included to send extra output value back to the original account.",
+	"flashsendtoaddress-address":   "Address to pay",
+	"flashsendtoaddress-amount":    "Amount to send to the payment address valued in utopia",
+	"flashsendtoaddress-comment":   "Unused",
+	"flashsendtoaddress-commentto": "Unused",
+	"flashsendtoaddress--result0":  "The transaction hash of the sent transaction",
+
 	// SendToMultisigCmd help.
 	"sendtomultisig--synopsis": "Authors, signs, and sends a transaction that outputs some amount to a multisig address.\n" +
 		"Unlike sendfrom, outputs are always chosen from the default account.\n" +

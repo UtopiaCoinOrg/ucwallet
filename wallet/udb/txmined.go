@@ -3147,7 +3147,7 @@ func (s *Store) MakeIgnoredInputSource(ns, addrmgrNs walletdb.ReadBucket, accoun
 				}
 			}
 			if opcode == txscript.OP_SSGEN || opcode == txscript.OP_SSRTX {
-				if !coinbaseMatured(s.chainParams, txHeight, syncHeight) {
+				if !ticketMatured(s.chainParams, txHeight, syncHeight) {
 					continue
 				}
 			}

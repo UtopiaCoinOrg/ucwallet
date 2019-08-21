@@ -2863,17 +2863,17 @@ func (s creditSlice) Less(i, j int) bool {
 	case s[i].OutPoint.Hash == s[j].OutPoint.Hash:
 		return s[i].OutPoint.Index < s[j].OutPoint.Index
 
-	// If both transactions are unmined, sort by their received date.
+		// If both transactions are unmined, sort by their received date.
 	case s[i].Height == -1 && s[j].Height == -1:
 		return s[i].Received.Before(s[j].Received)
 
-	// Unmined (newer) txs always come last.
+		// Unmined (newer) txs always come last.
 	case s[i].Height == -1:
 		return false
 	case s[j].Height == -1:
 		return true
 
-	// If both txs are mined in different blocks, sort by block height.
+		// If both txs are mined in different blocks, sort by block height.
 	default:
 		return s[i].Height < s[j].Height
 	}
@@ -3815,6 +3815,19 @@ func (w *Wallet) SendOutputs(outputs []*wire.TxOut, account uint32, minconf int3
 	return &hash, nil
 }
 
+func (w *Wallet) MakeNulldataOutput(payLoad []byte) (*wire.TxOut, error) {
+	payLoadScript, err := txscript.GenerateProvablyPruneableOut(payLoad)
+	if err == nil {
+		payLoadTx := &wire.TxOut{
+			Value:    int64(0),
+			PkScript: payLoadScript,
+		}
+		return payLoadTx, nil
+	} else {
+		return nil, err
+	}
+}
+
 // SignatureError records the underlying error when validating a transaction
 // input signature.
 type SignatureError struct {
@@ -4131,7 +4144,7 @@ func (w *Wallet) PublishTransaction(tx *wire.MsgTx, serializedTx []byte, n Netwo
 			if err != nil {
 				return err
 			}
-			err = w.checkHighFees(totalInput, tx)
+			err = w.checkHighFees(totalInput, tx, -1)
 			if err != nil {
 				return err
 			}
@@ -4220,7 +4233,18 @@ func (w *Wallet) PublishUnminedTransactions(ctx context.Context, p Peer) error {
 	if err != nil {
 		return errors.E(op, err)
 	}
-	err = p.PublishTransactions(ctx, unminedTxs...)
+
+	realUnminedTxs := make([]*wire.MsgTx, 0)
+
+	for _, tx := range unminedTxs {
+		//not resend flash tx
+		if _, isFlashTx := txscript.IsFlashTx(tx); isFlashTx {
+			continue
+		}
+		realUnminedTxs = append(realUnminedTxs, tx)
+	}
+
+	err = p.PublishTransactions(ctx, realUnminedTxs...)
 	if err != nil {
 		return errors.E(op, err)
 	}

@@ -7,6 +7,7 @@ package udb
 
 import (
 	"bytes"
+	"github.com/UtopiaCoinOrg/ucd/txscript"
 
 	"github.com/UtopiaCoinOrg/ucd/blockchain/stake"
 	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
@@ -327,7 +328,7 @@ func (s *Store) PruneUnmined(dbtx walletdb.ReadWriteTx, stakeDiff int64) error {
 		hash *chainhash.Hash
 	}
 	var toRemove []*removeTx
-
+	var flashToRemove []*chainhash.Hash
 	c := ns.NestedReadBucket(bucketUnmined).ReadCursor()
 	defer c.Close()
 	for k, v := c.First(); k != nil; k, v = c.Next() {
@@ -336,6 +337,32 @@ func (s *Store) PruneUnmined(dbtx walletdb.ReadWriteTx, stakeDiff int64) error {
 		if err != nil {
 			return errors.E(errors.IO, err)
 		}
+
+
+		blockHash,isLockTx:=txscript.IsFlashTx(&tx)
+		if isLockTx {
+			header, err := s.GetBlockHeader(dbtx, blockHash)
+			if err != nil {
+				log.Errorf("failed to getblockheader %v ,err: %v", blockHash, err)
+				continue
+			}
+
+			//release unconfirmed flashtx
+			if int32(header.Height)+6*2 < tipHeight {
+				txHash, err := chainhash.NewHash(k)
+				if err != nil {
+					log.Error("unexpected hash string %v",txHash)
+					continue
+				}
+				toRemove = append(toRemove, &removeTx{tx, txHash})
+				flashToRemove = append(flashToRemove, txHash)
+				continue
+			}
+
+		}
+
+
+
 
 		var expired, isTicketPurchase, isVote bool
 		switch {

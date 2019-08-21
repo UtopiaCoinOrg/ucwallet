@@ -749,6 +749,16 @@ func (src *scriptChangeSource) ScriptSize() int {
 	return len(src.script)
 }
 
+
+func (src *scriptChangeSource) SetChangeAddr(change ucutil.Address) {
+	//log.Info("rpcserver.scriptChangeSource.SetChangeAddr not implemented.")
+}
+
+func (src *scriptChangeSource) GetChangeAddr() ucutil.Address {
+//	log.Info("rpcserver.scriptChangeSource.GetChangeAddr not implemented.")
+	return nil
+}
+
 func makeScriptChangeSource(address string, version uint16) (*scriptChangeSource, error) {
 	destinationAddress, err := ucutil.DecodeAddress(address, ucutil.ActiveNet)
 	if err != nil {
@@ -995,6 +1005,16 @@ func (src *txChangeSource) Script() ([]byte, uint16, error) {
 func (src *txChangeSource) ScriptSize() int {
 	return len(src.script)
 }
+
+func (src *txChangeSource) SetChangeAddr(change ucutil.Address) {
+	//log.Info("rpcserver.txChangeSource.SetChangeAddr not implemented.")
+}
+
+func (src *txChangeSource) GetChangeAddr() ucutil.Address {
+	//	log.Info("rpcserver.txChangeSource.GetChangeAddr not implemented.")
+	return nil
+}
+
 
 func makeTxChangeSource(destination *pb.ConstructTransactionRequest_OutputDestination,
 	chainParams *chaincfg.Params) (*txChangeSource, error) {

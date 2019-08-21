@@ -337,6 +337,153 @@ func (w *Wallet) AcceptMempoolTx(tx *wire.MsgTx) error {
 	return nil
 }
 
+
+
+func (w *Wallet) HandleNewFlashTx(flashTxBytes []byte, tickets []*chainhash.Hash, resend bool) {
+	op:="handleNewFlashTx"
+	n, err := w.NetworkBackend()
+	if err != nil {
+		log.Error(errors.E(op, err))
+		return
+	}
+	msgFlashTx := wire.NewMsgFlashTx()
+	msgFlashTx.FromBytes(flashTxBytes)
+	log.Infof("handle newFlashTx Notifications:%v %v", msgFlashTx.TxHash(), resend)
+	var ticketHashes []*chainhash.Hash
+	err = walletdb.View(w.db, func(dbtx walletdb.ReadTx) error {
+		txmgrNs := dbtx.ReadBucket(wtxmgrNamespaceKey)
+
+		// Only consider tickets owned by this wallet.
+		ticketHashes = selectOwnedTickets(w, dbtx, tickets)
+		if len(ticketHashes) == 0 {
+			return nil
+		}
+
+		//deal with resend
+		if resend {
+			msgTx := msgFlashTx.MsgTx
+			//send to normal channel
+			err = n.PublishTransactions(context.TODO(),&msgTx)
+			msgHash:=msgTx.TxHash()
+			if err != nil {
+				log.Error("ai tx %v failed to resend to mempool, err %v", msgHash, err)
+				return err
+			}
+
+			log.Infof("ai tx %v resend to mempool", msgHash)
+			return nil
+		}
+
+		//deal with sign
+		//ttt:=0
+		for _, ticketHash := range ticketHashes {
+			//ttt++
+			//if ttt>=3{
+			//	break
+			//}
+			ticketPurchase, err := w.TxStore.Tx(txmgrNs, ticketHash)
+			if err != nil || ticketPurchase == nil {
+				ticketPurchase, err = w.StakeMgr.TicketPurchase(dbtx, ticketHash)
+			}
+			if err != nil {
+				log.Errorf("Failed to read ticket purchase transaction for "+
+					"ai ticket %v: %v", ticketHash, err)
+				continue
+			}
+
+			out := ticketPurchase.TxOut[0]
+			//find addr associated with the ticket
+			_, addrs, _, err := txscript.ExtractPkScriptAddrs(out.Version,
+				out.PkScript, w.chainParams)
+
+			if err != nil {
+				log.Errorf("Failed to extract addrs for "+
+					"ai ticket %v: %v", ticketHash, err)
+				continue
+			}
+
+			//flashtxvote
+			pk, err := w.PubKeyForAddress(addrs[0])
+			if err != nil {
+				log.Errorf("Failed to extract publick for "+
+					"ai ticket %v: %v", ticketHash, err)
+				continue
+			}
+
+			flashTxVote := wire.NewMsgFlashTxVote()
+			flashTxVote.Vote = true
+			flashTxVote.TicketHash = *ticketHash
+			flashTxVote.FlashTxHash = msgFlashTx.TxHash()
+			flashTxVote.PubKey = pk.SerializeCompressed()
+
+			signMsg := flashTxVote.FlashTxHash.String() + flashTxVote.TicketHash.String()
+
+			//sign msg
+			sig, err := w.SignMessage(signMsg, addrs[0])
+
+			flashTxVote.Sig = sig
+
+			err = n.SendFlashTxVote(flashTxVote)
+
+		}
+		return nil
+	})
+
+	//if resend {
+	//	//update confirm map
+	//	go func() {
+	//
+	//		copyTx := *msgFlashTx
+	//
+	//		//skip self send to self
+	//		for _, input := range copyTx.TxIn {
+	//			addr, err := txscript.AddressFromScriptSig(input.SignatureScript, w.ChainParams())
+	//			if err == nil {
+	//				_, err := w.AccountOfAddress(addr)
+	//				if err == nil {
+	//					return
+	//				}
+	//			}
+	//		}
+	//
+	//		//collect out to
+	//		for _, out := range copyTx.TxOut {
+	//			_, addrs, _, err := txscript.ExtractPkScriptAddrs(out.Version, out.PkScript, w.ChainParams())
+	//			if err == nil && len(addrs) > 0 {
+	//				_, err := w.AccountOfAddress(addrs[0])
+	//				if err == nil {
+	//					w.FlashTxConfirmsLock.Lock()
+	//					w.FlashTxConfirms[msgFlashTx.TxHash()] = &copyTx
+	//					w.FlashTxConfirmsLock.Unlock()
+	//
+	//					go func() {
+	//						err = walletdb.Update(w.db, func(dbtx walletdb.ReadWriteTx) error {
+	//							return w.processSerializedTransaction(dbtx, flashTxBytes, nil, nil)
+	//						})
+	//						if err == nil {
+	//							err = walletdb.View(w.db, func(tx walletdb.ReadTx) error {
+	//								return w.watchFutureAddresses(tx)
+	//							})
+	//						}
+	//					}()
+	//					return
+	//				}
+	//			}
+	//		}
+	//
+	//	}()
+	//
+	//}
+
+	if err != nil {
+		log.Errorf("db View failed handle ai tx: %v", err)
+	}
+
+}
+
+
+
+
 func (w *Wallet) processSerializedTransaction(dbtx walletdb.ReadWriteTx, serializedTx []byte,
 	header *wire.BlockHeader, blockMeta *udb.BlockMeta) (watchOutPoints []wire.OutPoint, err error) {
 
@@ -989,7 +1136,7 @@ func (w *Wallet) RevokeOwnedTickets(missedTicketHashes []*chainhash.Hash) error 
 					ticketHash, err)
 				continue
 			}
-			err = w.checkHighFees(ucutil.Amount(ticketPurchase.TxOut[0].Value), revocation)
+			err = w.checkHighFees(ucutil.Amount(ticketPurchase.TxOut[0].Value), revocation, -1)
 			if err != nil {
 				log.Errorf("Revocation pays exceedingly high fees")
 				continue

@@ -21,6 +21,7 @@ type Peer interface {
 	GetCFilters(ctx context.Context, blockHashes []*chainhash.Hash) ([]*gcs.Filter, error)
 	GetHeaders(ctx context.Context, blockLocators []*chainhash.Hash, hashStop *chainhash.Hash) ([]*wire.BlockHeader, error)
 	PublishTransactions(ctx context.Context, txs ...*wire.MsgTx) error
+
 }
 
 // NetworkBackend provides wallets with Utopia network functionality.  Some
@@ -38,6 +39,8 @@ type NetworkBackend interface {
 	// error.  Use Wallet.NextStakeDifficulty to calculate the next ticket price
 	// when the DCP0001 deployment is known to be active.
 	StakeDifficulty(ctx context.Context) (ucutil.Amount, error)
+
+	SendFlashTxVote(flashTxVote *wire.MsgFlashTxVote)error
 }
 
 // NetworkBackend returns the currently associated network backend of the

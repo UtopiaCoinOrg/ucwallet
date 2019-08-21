@@ -812,18 +812,40 @@ type p2PKHChangeSource struct {
 	persist persistReturnedChildFunc
 	account uint32
 	wallet  *Wallet
+	changeAddr ucutil.Address
 }
 
 func (src *p2PKHChangeSource) Script() ([]byte, uint16, error) {
-	changeAddress, err := src.wallet.newChangeAddress("", src.persist, src.account)
+	if src.changeAddr != nil{
+		return addressScript(src.changeAddr)
+	}
+	addr , err := src.wallet.newChangeAddress("", src.persist, src.account)
 	if err != nil {
 		return nil, 0, err
 	}
-	return addressScript(changeAddress)
+	src.changeAddr = addr
+	return addressScript(src.changeAddr)
 }
 
 func (src *p2PKHChangeSource) ScriptSize() int {
 	return txsizes.P2PKHPkScriptSize
+}
+
+func (src *p2PKHChangeSource) SetChangeAddr(change ucutil.Address) {
+	src.changeAddr = change
+}
+
+func (src *p2PKHChangeSource) GetChangeAddr() ucutil.Address {
+	if src.changeAddr != nil{
+		return src.changeAddr
+	}else{
+		addr , err := src.wallet.newChangeAddress("", src.persist, src.account)
+		if err != nil {
+			return nil
+		}
+		src.changeAddr = addr
+		return src.changeAddr
+	}
 }
 
 func deriveChildAddresses(key *hdkeychain.ExtendedKey, startIndex, count uint32, params *chaincfg.Params) ([]ucutil.Address, error) {

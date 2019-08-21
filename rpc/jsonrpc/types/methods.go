@@ -977,6 +977,29 @@ func NewSendToAddressCmd(address string, amount float64, comment, commentTo *str
 	}
 }
 
+
+// FlashSendToAddressCmd defines the flashSendtoaddress JSON-RPC command.
+type FlashSendToAddressCmd struct {
+	Address   string
+	Amount    float64
+	Comment   *string
+	CommentTo *string
+}
+
+// FlashSendToAddressCmd returns a new instance which can be used to issue a
+// flashSendtoaddress JSON-RPC command.
+//
+// The parameters which are pointers indicate they are optional.  Passing nil
+// for optional parameters will use the default value.
+func NewFlashSendToAddressCmd(address string, amount float64, comment, commentTo *string) *FlashSendToAddressCmd {
+	return &FlashSendToAddressCmd{
+		Address:   address,
+		Amount:    amount,
+		Comment:   comment,
+		CommentTo: commentTo,
+	}
+}
+
 // SendToMultiSigCmd is a type handling custom marshaling and
 // unmarshaling of sendtomultisig JSON RPC commands.
 type SendToMultiSigCmd struct {
@@ -1324,6 +1347,7 @@ func init() {
 		{"sendfrom", (*SendFromCmd)(nil)},
 		{"sendmany", (*SendManyCmd)(nil)},
 		{"sendtoaddress", (*SendToAddressCmd)(nil)},
+		{"flashsendtoaddress", (*FlashSendToAddressCmd)(nil)},
 		{"sendtomultisig", (*SendToMultiSigCmd)(nil)},
 		{"settxfee", (*SetTxFeeCmd)(nil)},
 		{"setticketfee", (*SetTicketFeeCmd)(nil)},

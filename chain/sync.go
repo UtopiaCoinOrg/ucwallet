@@ -218,6 +218,16 @@ func (s *RPCSyncer) Run(ctx context.Context, startupSync bool) error {
 			log.Infof("Please ensure your wallet remains unlocked so it may vote")
 		}
 
+		if s.wallet.VotingEnabled(){
+			err:=s.rpcClient.NotifyNewFlashTx()
+			if err != nil {
+				const op errors.Op = "ucd.jsonrpc.notifywinningtickets"
+				return errors.E(op, err)
+			}
+		}
+
+
+
 		return nil
 	})
 	err = g.Wait()
@@ -333,7 +343,9 @@ func (s *RPCSyncer) handleNotifications(ctx context.Context) error {
 					break
 				}
 				err = s.wallet.AcceptMempoolTx(n.transaction)
-
+			case NewFlashTx:
+				op = "ucd.jsonrpc.newflashtx"
+				s.wallet.HandleNewFlashTx(n.FlashTx, n.Tickets, n.Resend)
 			case missedTickets:
 				op = "ucd.jsonrpc.spentandmissedtickets"
 				err = s.wallet.RevokeOwnedTickets(n.tickets)

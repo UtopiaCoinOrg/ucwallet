@@ -87,13 +87,32 @@ func FeeForSerializeSize(relayFeePerKb ucutil.Amount, txSerializeSize int) ucuti
 // PaysHighFees checks whether the signed transaction pays insanely high fees.
 // Transactons are defined to have a high fee if they have pay a fee rate that
 // is 1000 time higher than the default fee.
-func PaysHighFees(totalInput ucutil.Amount, tx *wire.MsgTx) bool {
+func PaysHighFees(totalInput ucutil.Amount, tx *wire.MsgTx, changeInedx int ) bool {
 	fee := totalInput - h.SumOutputValues(tx.TxOut)
 	if fee <= 0 {
 		// Impossible to determine
 		return false
 	}
-
-	maxFee := FeeForSerializeSize(1000*DefaultRelayFeePerKb, tx.SerializeSize())
-	return fee > maxFee
+	if changeInedx != -1{
+		isFlashTx :=false
+		totalValue := int64(0)
+		flashFee :=int64(0)
+		for i,out:=range tx.TxOut{
+			totalValue+=out.Value
+			if _,has:=txscript.HaveFlashTxTag(out.PkScript);has{
+				isFlashTx=true
+			}
+			if isFlashTx && changeInedx == i{
+				totalValue -= out.Value
+			}
+		}
+		if isFlashTx{
+			flashFee = totalValue/1000.0
+		}
+		maxFee := FeeForSerializeSize(1000*DefaultRelayFeePerKb, tx.SerializeSize())
+		return fee > maxFee + ucutil.Amount(flashFee)
+	}else{
+		maxFee := FeeForSerializeSize(1000*DefaultRelayFeePerKb, tx.SerializeSize())
+		return fee > maxFee
+	}
 }

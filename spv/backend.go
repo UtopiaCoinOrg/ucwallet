@@ -119,7 +119,9 @@ func (s *Syncer) LoadTxFilter(ctx context.Context, reload bool, addrs []ucutil.A
 	s.filterMu.Unlock()
 	return nil
 }
-
+func (s *Syncer)SendFlashTxVote(flashTxVote *wire.MsgFlashTxVote)error{
+	return nil
+}
 // PublishTransactions implements the PublishTransaction method of the
 // wallet.Peer interface.
 func (s *Syncer) PublishTransactions(ctx context.Context, txs ...*wire.MsgTx) error {

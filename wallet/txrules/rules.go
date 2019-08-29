@@ -6,8 +6,8 @@
 package txrules
 
 import (
-	"github.com/UtopiaCoinOrg/ucd/ucutil"
 	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
 	"github.com/UtopiaCoinOrg/ucd/wire"
 	"github.com/UtopiaCoinOrg/ucwallet/errors"
 	h "github.com/UtopiaCoinOrg/ucwallet/internal/helpers"
@@ -29,6 +29,9 @@ func IsDustAmount(amount ucutil.Amount, scriptSize int, relayFeePerKb ucutil.Amo
 	totalSize := 8 + 2 + wire.VarIntSerializeSize(uint64(scriptSize)) +
 		scriptSize + 165
 
+	if amount > 1e12 {
+		return false
+	}
 	// Dust is defined as an output value where the total cost to the network
 	// (output size + input size) is greater than 1/3 of the relay fee.
 	return int64(amount)*1000/(3*int64(totalSize)) < int64(relayFeePerKb)

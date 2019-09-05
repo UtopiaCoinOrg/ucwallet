@@ -26,6 +26,7 @@ type GetAccountBalanceResult struct {
 	Total                   float64 `json:"total"`
 	Unconfirmed             float64 `json:"unconfirmed"`
 	VotingAuthority         float64 `json:"votingauthority"`
+	FlashTxConfirmed        float64 `json:"flashtxconfirmed"`
 }
 
 // GetBalanceResult models the data from the getbalance command.
@@ -39,6 +40,7 @@ type GetBalanceResult struct {
 	CumulativeTotal              float64                   `json:"cumulativetotal,omitempty"`
 	TotalUnconfirmed             float64                   `json:"totalunconfirmed,omitempty"`
 	TotalVotingAuthority         float64                   `json:"totalvotingauthority,omitempty"`
+	TotalFlashTxConfirmed        float64                   `json:"totalflashtxconfirmed,omitempty"`
 }
 
 // GetContractHashResult models the data from the getcontracthash command.

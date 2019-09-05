@@ -337,10 +337,8 @@ func (w *Wallet) AcceptMempoolTx(tx *wire.MsgTx) error {
 	return nil
 }
 
-
-
 func (w *Wallet) HandleNewFlashTx(flashTxBytes []byte, tickets []*chainhash.Hash, resend bool) {
-	op:="handleNewFlashTx"
+	op := "handleNewFlashTx"
 	n, err := w.NetworkBackend()
 	if err != nil {
 		log.Error(errors.E(op, err))
@@ -363,8 +361,8 @@ func (w *Wallet) HandleNewFlashTx(flashTxBytes []byte, tickets []*chainhash.Hash
 		if resend {
 			msgTx := msgFlashTx.MsgTx
 			//send to normal channel
-			err = n.PublishTransactions(context.TODO(),&msgTx)
-			msgHash:=msgTx.TxHash()
+			err = n.PublishTransactions(context.TODO(), &msgTx)
+			msgHash := msgTx.TxHash()
 			if err != nil {
 				log.Error("ai tx %v failed to resend to mempool, err %v", msgHash, err)
 				return err
@@ -429,60 +427,43 @@ func (w *Wallet) HandleNewFlashTx(flashTxBytes []byte, tickets []*chainhash.Hash
 		return nil
 	})
 
-	//if resend {
-	//	//update confirm map
-	//	go func() {
-	//
-	//		copyTx := *msgFlashTx
-	//
-	//		//skip self send to self
-	//		for _, input := range copyTx.TxIn {
-	//			addr, err := txscript.AddressFromScriptSig(input.SignatureScript, w.ChainParams())
-	//			if err == nil {
-	//				_, err := w.AccountOfAddress(addr)
-	//				if err == nil {
-	//					return
-	//				}
-	//			}
-	//		}
-	//
-	//		//collect out to
-	//		for _, out := range copyTx.TxOut {
-	//			_, addrs, _, err := txscript.ExtractPkScriptAddrs(out.Version, out.PkScript, w.ChainParams())
-	//			if err == nil && len(addrs) > 0 {
-	//				_, err := w.AccountOfAddress(addrs[0])
-	//				if err == nil {
-	//					w.FlashTxConfirmsLock.Lock()
-	//					w.FlashTxConfirms[msgFlashTx.TxHash()] = &copyTx
-	//					w.FlashTxConfirmsLock.Unlock()
-	//
-	//					go func() {
-	//						err = walletdb.Update(w.db, func(dbtx walletdb.ReadWriteTx) error {
-	//							return w.processSerializedTransaction(dbtx, flashTxBytes, nil, nil)
-	//						})
-	//						if err == nil {
-	//							err = walletdb.View(w.db, func(tx walletdb.ReadTx) error {
-	//								return w.watchFutureAddresses(tx)
-	//							})
-	//						}
-	//					}()
-	//					return
-	//				}
-	//			}
-	//		}
-	//
-	//	}()
-	//
-	//}
+	if resend {
+		//update confirm map
+
+		copyTx := *msgFlashTx
+
+		//skip self send to self
+		for _, input := range copyTx.TxIn {
+			addr, err := txscript.AddressFromScriptSig(input.SignatureScript, w.ChainParams())
+			if err == nil {
+				_, err := w.AccountOfAddress(addr)
+				if err == nil {
+					return
+				}
+			}
+		}
+
+		//collect out to
+		for _, out := range copyTx.TxOut {
+			_, addrs, _, err := txscript.ExtractPkScriptAddrs(out.Version, out.PkScript, w.ChainParams())
+			if err == nil && len(addrs) > 0 {
+				_, err := w.AccountOfAddress(addrs[0])
+				if err == nil {
+					w.FlashTxConfirmsLock.Lock()
+					w.FlashTxConfirms[msgFlashTx.TxHash()] = &copyTx
+					w.FlashTxConfirmsLock.Unlock()
+
+				}
+			}
+		}
+
+	}
 
 	if err != nil {
 		log.Errorf("db View failed handle ai tx: %v", err)
 	}
 
 }
-
-
-
 
 func (w *Wallet) processSerializedTransaction(dbtx walletdb.ReadWriteTx, serializedTx []byte,
 	header *wire.BlockHeader, blockMeta *udb.BlockMeta) (watchOutPoints []wire.OutPoint, err error) {
@@ -787,7 +768,6 @@ func (w *Wallet) processTransactionRecord(dbtx walletdb.ReadWriteTx, rec *udb.Tx
 			// ticket commitments. All other outputs can be ignored.
 			continue
 		}
-
 
 		var tree int8
 		if isStakeType {

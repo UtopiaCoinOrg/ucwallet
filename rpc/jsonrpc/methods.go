@@ -22,13 +22,13 @@ import (
 	"github.com/UtopiaCoinOrg/ucd/blockchain/stake"
 	"github.com/UtopiaCoinOrg/ucd/chaincfg"
 	"github.com/UtopiaCoinOrg/ucd/chaincfg/chainhash"
-	"github.com/UtopiaCoinOrg/ucd/ucec"
-	"github.com/UtopiaCoinOrg/ucd/ucjson"
-	"github.com/UtopiaCoinOrg/ucd/ucutil"
 	"github.com/UtopiaCoinOrg/ucd/hdkeychain"
 	ucdtypes "github.com/UtopiaCoinOrg/ucd/rpc/jsonrpc/types"
 	"github.com/UtopiaCoinOrg/ucd/rpcclient"
 	"github.com/UtopiaCoinOrg/ucd/txscript"
+	"github.com/UtopiaCoinOrg/ucd/ucec"
+	"github.com/UtopiaCoinOrg/ucd/ucjson"
+	"github.com/UtopiaCoinOrg/ucd/ucutil"
 	"github.com/UtopiaCoinOrg/ucd/wire"
 	"github.com/UtopiaCoinOrg/ucwallet/chain"
 	"github.com/UtopiaCoinOrg/ucwallet/errors"
@@ -48,8 +48,8 @@ const (
 	jsonrpcSemverMinor  = 1
 	jsonrpcSemverPatch  = 0
 
-	communityTxTag             = "uccommunitySend"
-	defaultConfirmNumber  = 6
+	communityTxTag       = "uccommunitySend"
+	defaultConfirmNumber = 6
 )
 
 // confirms returns the number of confirmations for a transaction in a block at
@@ -113,7 +113,7 @@ var handlers = map[string]handler{
 	"sendfrom":                {fn: (*Server).sendFrom},
 	"sendmany":                {fn: (*Server).sendMany},
 	"sendtoaddress":           {fn: (*Server).sendToAddress},
-	"flashsendtoaddress":       {fn: (*Server).flashSendToAddress},
+	"flashsendtoaddress":      {fn: (*Server).flashSendToAddress},
 	"sendtomultisig":          {fn: (*Server).sendToMultiSig},
 	"setticketfee":            {fn: (*Server).setTicketFee},
 	"settxfee":                {fn: (*Server).setTxFee},
@@ -651,6 +651,36 @@ func (s *Server) getBalance(ctx context.Context, icmd interface{}) (interface{},
 		BlockHash: blockHash.String(),
 	}
 
+	accountFlashConfirms := make(map[uint32]ucutil.Amount)
+
+	w.FlashTxConfirmsLock.Lock()
+FlashTxConfirm:
+	for _, msgTx := range w.FlashTxConfirms {
+		//skip tx that send from self
+		for _, input := range msgTx.TxIn {
+			addr, err := txscript.AddressFromScriptSig(input.SignatureScript, w.ChainParams())
+			if err == nil {
+				_, err := w.AccountOfAddress(addr)
+				if err == nil {
+					continue FlashTxConfirm
+				}
+			}
+		}
+
+		//collect out to
+		for _, out := range msgTx.TxOut {
+			_, addrs, _, err := txscript.ExtractPkScriptAddrs(out.Version, out.PkScript, w.ChainParams())
+			if err == nil && len(addrs) > 0 {
+				account, err := w.AccountOfAddress(addrs[0])
+				if err == nil {
+					accountFlashConfirms[account] += ucutil.Amount(out.Value)
+				}
+			}
+		}
+	}
+
+	w.FlashTxConfirmsLock.Unlock()
+
 	if accountName == "*" {
 		balances, err := w.CalculateAccountBalances(int32(*cmd.MinConf))
 		if err != nil {
@@ -665,6 +695,7 @@ func (s *Server) getBalance(ctx context.Context, icmd interface{}) (interface{},
 			totUnconfirmed      ucutil.Amount
 			totVotingAuthority  ucutil.Amount
 			cumTot              ucutil.Amount
+			totFlashTxConfirmed ucutil.Amount
 		)
 
 		balancesLen := uint32(len(balances))
@@ -687,6 +718,7 @@ func (s *Server) getBalance(ctx context.Context, icmd interface{}) (interface{},
 			totUnconfirmed += bal.Unconfirmed
 			totVotingAuthority += bal.VotingAuthority
 			cumTot += bal.Total
+			totFlashTxConfirmed += accountFlashConfirms[bal.Account]
 
 			json := types.GetAccountBalanceResult{
 				AccountName:             accountName,
@@ -697,6 +729,7 @@ func (s *Server) getBalance(ctx context.Context, icmd interface{}) (interface{},
 				Total:                   bal.Total.ToCoin(),
 				Unconfirmed:             bal.Unconfirmed.ToCoin(),
 				VotingAuthority:         bal.VotingAuthority.ToCoin(),
+				FlashTxConfirmed:        accountFlashConfirms[bal.Account].ToCoin(),
 			}
 
 			var balIdx uint32
@@ -714,6 +747,7 @@ func (s *Server) getBalance(ctx context.Context, icmd interface{}) (interface{},
 		result.TotalSpendable = totSpendable.ToCoin()
 		result.TotalUnconfirmed = totUnconfirmed.ToCoin()
 		result.TotalVotingAuthority = totVotingAuthority.ToCoin()
+		result.TotalFlashTxConfirmed = totFlashTxConfirmed.ToCoin()
 		result.CumulativeTotal = cumTot.ToCoin()
 	} else {
 		account, err := w.AccountNumber(accountName)
@@ -741,6 +775,7 @@ func (s *Server) getBalance(ctx context.Context, icmd interface{}) (interface{},
 			Total:                   bal.Total.ToCoin(),
 			Unconfirmed:             bal.Unconfirmed.ToCoin(),
 			VotingAuthority:         bal.VotingAuthority.ToCoin(),
+			FlashTxConfirmed:        accountFlashConfirms[account].ToCoin(),
 		}
 		result.Balances = append(result.Balances, json)
 	}
@@ -2744,12 +2779,12 @@ func (s *Server) flashSendToAddress(ctx context.Context, icmd interface{}) (inte
 		client, err := chain.RPCClientFromBackend(n)
 		if err == nil {
 			chainClient = client
-		}else{
+		} else {
 			return nil, fmt.Errorf("chain client is not connected")
 		}
 	}
 
-	lotteryHash, err :=chainClient.GetBlockHash(int64(height) - defaultConfirmNumber)
+	lotteryHash, err := chainClient.GetBlockHash(int64(height) - defaultConfirmNumber)
 	if err != nil {
 		lotteryHash = &bestHash
 	}

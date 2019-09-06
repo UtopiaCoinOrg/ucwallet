@@ -218,15 +218,13 @@ func (s *RPCSyncer) Run(ctx context.Context, startupSync bool) error {
 			log.Infof("Please ensure your wallet remains unlocked so it may vote")
 		}
 
-		if s.wallet.VotingEnabled(){
-			err:=s.rpcClient.NotifyNewFlashTx()
+		if s.wallet.VotingEnabled() {
+			err := s.rpcClient.NotifyNewFlashTx()
 			if err != nil {
 				const op errors.Op = "ucd.jsonrpc.notifywinningtickets"
 				return errors.E(op, err)
 			}
 		}
-
-
 
 		return nil
 	})
@@ -284,6 +282,15 @@ func (s *RPCSyncer) handleNotifications(ctx context.Context) error {
 							break
 						}
 						txs = append(txs, msgTx)
+
+						//Flashtxconfirm
+						txHash := msgTx.TxHash()
+						s.wallet.FlashTxConfirmsLock.Lock()
+						if _, exist := s.wallet.FlashTxConfirms[txHash]; exist {
+							delete(s.wallet.FlashTxConfirms, txHash)
+						}
+						s.wallet.FlashTxConfirmsLock.Unlock()
+
 					}
 					if relevantTxs == nil {
 						relevantTxs = make(map[chainhash.Hash][]*wire.MsgTx)

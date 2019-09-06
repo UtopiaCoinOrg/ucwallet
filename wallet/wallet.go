@@ -106,6 +106,10 @@ type Wallet struct {
 	lockedOutpoints  map[wire.OutPoint]struct{}
 	lockedOutpointMu sync.Mutex
 
+	//Flashtx confirm
+	FlashTxConfirmsLock sync.Mutex
+	FlashTxConfirms     map[chainhash.Hash]*wire.MsgFlashTx
+
 	relayFee                ucutil.Amount
 	relayFeeMu              sync.Mutex
 	ticketFeeIncrementLock  sync.Mutex
@@ -4439,7 +4443,8 @@ func Open(cfg *Config) (*Wallet, error) {
 
 		lockedOutpoints: map[wire.OutPoint]struct{}{},
 
-		addressBuffers: make(map[uint32]*bip0044AccountData),
+		FlashTxConfirms: make(map[chainhash.Hash]*wire.MsgFlashTx),
+		addressBuffers:  make(map[uint32]*bip0044AccountData),
 	}
 
 	// Open database managers

@@ -926,7 +926,7 @@ func decodeAddress(s string, params *chaincfg.Params) (ucutil.Address, error) {
 		return pubKeyAddr, nil
 	}
 
-	addr, err := ucutil.DecodeAddress(s, ucutil.ActiveNet)
+	addr, err := ucutil.DecodeAddress(s)
 	if err != nil {
 		return nil, rpcErrorf(ucjson.ErrRPCInvalidAddressOrKey,
 			"invalid address %q: decode failed: %#q", s, err)
@@ -2539,7 +2539,7 @@ func (s *Server) stakePoolUserInfo(ctx context.Context, icmd interface{}) (inter
 		return nil, errUnloadedWallet
 	}
 
-	userAddr, err := ucutil.DecodeAddress(cmd.User, ucutil.ActiveNet)
+	userAddr, err := ucutil.DecodeAddress(cmd.User)
 	if err != nil {
 		return nil, err
 	}
@@ -2601,7 +2601,7 @@ func (s *Server) ticketsForAddress(ctx context.Context, icmd interface{}) (inter
 		return nil, errUnloadedWallet
 	}
 
-	addr, err := ucutil.DecodeAddress(cmd.Address, ucutil.ActiveNet)
+	addr, err := ucutil.DecodeAddress(cmd.Address)
 	if err != nil {
 		return nil, err
 	}
@@ -3292,7 +3292,7 @@ func (src *scriptChangeSource) GetChangeAddr() ucutil.Address {
 }
 
 func makeScriptChangeSource(address string, version uint16) (*scriptChangeSource, error) {
-	destinationAddress, err := ucutil.DecodeAddress(address, ucutil.ActiveNet)
+	destinationAddress, err := ucutil.DecodeAddress(address)
 	if err != nil {
 		return nil, err
 	}
@@ -3486,7 +3486,7 @@ func (s *Server) verifyMessage(ctx context.Context, icmd interface{}) (interface
 	var valid bool
 
 	// Decode address and base64 signature from the request.
-	addr, err := ucutil.DecodeAddress(cmd.Address, ucutil.ActiveNet)
+	addr, err := ucutil.DecodeAddress(cmd.Address)
 	if err != nil {
 		return nil, err
 	}

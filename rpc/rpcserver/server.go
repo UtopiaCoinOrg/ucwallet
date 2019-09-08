@@ -133,7 +133,7 @@ func errorCode(err error) codes.Code {
 // network.  This should be used preferred to direct usage of
 // ucutil.DecodeAddress, which does not perform the network check.
 func decodeAddress(a string, params *chaincfg.Params) (ucutil.Address, error) {
-	addr, err := ucutil.DecodeAddress(a, ucutil.ActiveNet)
+	addr, err := ucutil.DecodeAddress(a)
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "invalid address %v: %v", a, err)
 	}
@@ -760,7 +760,7 @@ func (src *scriptChangeSource) GetChangeAddr() ucutil.Address {
 }
 
 func makeScriptChangeSource(address string, version uint16) (*scriptChangeSource, error) {
-	destinationAddress, err := ucutil.DecodeAddress(address, ucutil.ActiveNet)
+	destinationAddress, err := ucutil.DecodeAddress(address)
 	if err != nil {
 		return nil, err
 	}
@@ -2865,7 +2865,7 @@ func (s *messageVerificationServer) VerifyMessage(ctx context.Context, req *pb.V
 
 	var valid bool
 
-	addr, err := ucutil.DecodeAddress(req.Address, ucutil.ActiveNet)
+	addr, err := ucutil.DecodeAddress(req.Address)
 	if err != nil {
 		return nil, translateError(err)
 	}

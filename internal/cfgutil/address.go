@@ -33,7 +33,7 @@ func (a *AddressFlag) UnmarshalFlag(addr string) error {
 		a.Address = nil
 		return nil
 	}
-	address, err := ucutil.DecodeAddress(addr, ucutil.ActiveNet)
+	address, err := ucutil.DecodeAddress(addr)
 	if err != nil {
 		return err
 	}

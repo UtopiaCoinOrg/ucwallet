@@ -373,12 +373,8 @@ func (w *Wallet) HandleNewFlashTx(flashTxBytes []byte, tickets []*chainhash.Hash
 		}
 
 		//deal with sign
-		//ttt:=0
+
 		for _, ticketHash := range ticketHashes {
-			//ttt++
-			//if ttt>=3{
-			//	break
-			//}
 			ticketPurchase, err := w.TxStore.Tx(txmgrNs, ticketHash)
 			if err != nil || ticketPurchase == nil {
 				ticketPurchase, err = w.StakeMgr.TicketPurchase(dbtx, ticketHash)

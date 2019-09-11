@@ -391,20 +391,18 @@ func (w *Wallet) HandleNewFlashTx(flashTxBytes []byte, tickets []*chainhash.Hash
 
 			out := ticketPurchase.TxOut[0]
 			//find addr associated with the ticket
-			_, addrs, _, err := txscript.ExtractPkScriptAddrs(out.Version,
+			class, addrs, _, err := txscript.ExtractPkScriptAddrs(out.Version,
 				out.PkScript, w.chainParams)
 
 			if err != nil {
 				log.Errorf("Failed to extract addrs for "+
-					"ai ticket %v: %v", ticketHash, err)
+					"flash ticket %v: %v", ticketHash, err)
 				continue
 			}
 
-			//flashtxvote
-			pk, err := w.PubKeyForAddress(addrs[0])
-			if err != nil {
-				log.Errorf("Failed to extract publick for "+
-					"ai ticket %v: %v", ticketHash, err)
+			if len(addrs) == 0 {
+				log.Errorf("Failed to extract addrs for "+
+					"flash ticket %v: addrs length is 0", ticketHash)
 				continue
 			}
 
@@ -412,12 +410,41 @@ func (w *Wallet) HandleNewFlashTx(flashTxBytes []byte, tickets []*chainhash.Hash
 			flashTxVote.Vote = true
 			flashTxVote.TicketHash = *ticketHash
 			flashTxVote.FlashTxHash = msgFlashTx.TxHash()
-			flashTxVote.PubKey = pk.SerializeCompressed()
+
+			//add stakesubmissionty redeemscript to  pubkey
+			if class == txscript.MultiSigTy || class == txscript.StakeSubmissionTy {
+				redeemScript, err := w.RedeemScriptCopy(addrs[0])
+				if err != nil {
+					log.Errorf("Failed to RedeemScriptCopy for "+
+						"flash ticket %v: %v", ticketHash, err)
+					continue
+				}
+				flashTxVote.PubKey = redeemScript
+			}
 
 			signMsg := flashTxVote.FlashTxHash.String() + flashTxVote.TicketHash.String()
 
 			//sign msg
-			sig, err := w.SignMessage(signMsg, addrs[0])
+			var sig []byte
+			if class == txscript.MultiSigTy || class == txscript.StakeSubmissionTy {
+				_, pkAddrs, _, err := txscript.ExtractPkScriptAddrs(
+					txscript.DefaultScriptVersion, flashTxVote.PubKey, w.ChainParams())
+				if err != nil {
+					log.Errorf("Failed to ExtractPkScriptAddrs for "+
+						"redeemScript %v: %v", flashTxVote.PubKey, err)
+					continue
+				}
+				for _, addr := range pkAddrs {
+					if have, _ := w.HaveAddress(addr); have {
+						sig, err = w.SignMessage(signMsg, addr)
+						if err == nil {
+							break
+						}
+					}
+				}
+			} else {
+				sig, err = w.SignMessage(signMsg, addrs[0])
+			}
 
 			flashTxVote.Sig = sig
 

@@ -395,7 +395,8 @@ func (s *RPCSyncer) handleVoteNotifications(ctx context.Context) error {
 			switch n := n.(type) {
 			case winningTickets:
 				op = "ucd.jsonrpc.winningtickets"
-				err = s.wallet.VoteOnOwnedTickets(n.tickets, n.blockHash, int32(n.blockHeight))
+				err = s.wallet.
+					VoteOnOwnedTickets(n.tickets, n.blockHash, int32(n.blockHeight))
 			default:
 				log.Warnf("Voting handler received unknown notification type %T", n)
 			}

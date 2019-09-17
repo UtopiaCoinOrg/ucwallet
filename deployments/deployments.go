@@ -26,17 +26,17 @@ type HardcodedDeployment struct {
 // DCP0001 specifies hard forking changes to the stake difficulty algorithm as
 // defined by https://github.com/UtopiaCoinOrg/dcps/blob/master/dcp-0001/dcp-0001.mediawiki.
 var DCP0001 = HardcodedDeployment{
-	MainNetActivationHeight:  149248,
-	TestNet2ActivationHeight: 46128,
+	MainNetActivationHeight:  0,
+	TestNet2ActivationHeight: 0,
 	TestNet3ActivationHeight: 0,
 	SimNetActivationHeight:   0,
 }
 
-// DCP0002 specifies the activation of the OP_SHA256 hard fork as defined by
+/*// DCP0002 specifies the activation of the OP_SHA256 hard fork as defined by
 // https://github.com/UtopiaCoinOrg/dcps/blob/master/dcp-0002/dcp-0002.mediawiki.
 var DCP0002 = HardcodedDeployment{
-	MainNetActivationHeight:  189568,
-	TestNet2ActivationHeight: 151968,
+	MainNetActivationHeight:  0,
+	TestNet2ActivationHeight: 0,
 	TestNet3ActivationHeight: 0,
 	SimNetActivationHeight:   0,
 }
@@ -44,12 +44,12 @@ var DCP0002 = HardcodedDeployment{
 // DCP0003 specifies the activation of a CSV soft fork as defined by
 // https://github.com/UtopiaCoinOrg/dcps/blob/master/dcp-0003/dcp-0003.mediawiki.
 var DCP0003 = HardcodedDeployment{
-	MainNetActivationHeight:  189568,
-	TestNet2ActivationHeight: 151968,
+	MainNetActivationHeight:  0,
+	TestNet2ActivationHeight: 0,
 	TestNet3ActivationHeight: 0,
 	SimNetActivationHeight:   0,
 }
-
+*/
 // Active returns whether the hardcoded deployment is active at height on the
 // network specified by params.  Active always returns false for unrecognized
 // networks.

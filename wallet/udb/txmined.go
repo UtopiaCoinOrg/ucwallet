@@ -469,7 +469,7 @@ func extractBlockHeaderVoteBits(header []byte) uint16 {
 }
 
 func extractBlockHeaderHeight(header []byte) int32 {
-	const heightOffset = 102
+	const heightOffset = 104
 	return int32(binary.LittleEndian.Uint32(header[heightOffset:]))
 }
 

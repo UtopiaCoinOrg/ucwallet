@@ -217,15 +217,11 @@ func (s *RPCSyncer) Run(ctx context.Context, startupSync bool) error {
 				"extended vote bits = %x", vb.Bits, vb.ExtendedBits)
 			log.Infof("Please ensure your wallet remains unlocked so it may vote")
 		}
-
-		if s.wallet.VotingEnabled() {
-			err := s.rpcClient.NotifyNewFlashTx()
-			if err != nil {
-				const op errors.Op = "ucd.jsonrpc.notifywinningtickets"
-				return errors.E(op, err)
-			}
+		err = s.rpcClient.NotifyNewFlashTx()
+		if err != nil {
+			const op errors.Op = "ucd.jsonrpc.notifywinningtickets"
+			return errors.E(op, err)
 		}
-
 		return nil
 	})
 	err = g.Wait()

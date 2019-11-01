@@ -3429,7 +3429,7 @@ func (s *Store) balanceFullScan(ns, addrmgrNs walletdb.ReadBucket, minConf int32
 		case txscript.OP_SSGEN:
 			fallthrough
 		case txscript.OP_SSRTX:
-			if coinbaseMatured(s.chainParams, height, syncHeight) {
+			if ticketChangeMatured(s.chainParams, height, syncHeight) {
 				ab.Spendable += utxoAmt
 			} else {
 				ab.ImmatureStakeGeneration += utxoAmt
